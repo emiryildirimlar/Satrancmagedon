@@ -31,6 +31,10 @@
 ![IMG-20250518-WA0008](https://github.com/user-attachments/assets/d601745c-5237-4215-9b57-09d04c2f7838)
 
 
+📬 İletişim
+Projeyle ilgili soruların için:
+📧 emiryildirimlar@gmail.com
+
 ## English 🇬🇧
 
 **Satrancmagedon** is a chess-themed e-commerce website developed using ASP.NET MVC. The platform allows users to browse chess-related products, add them to the cart, and place orders. Admins can manage products and track orders through the admin panel.
@@ -55,3 +59,7 @@
 Bu proje eğitim amaçlı geliştirilmiştir.  
 This project was developed for educational purposes.
 
+
+📬 Contact
+For questions or feedback:
+📧 emiryildirimlar@gmail.com
