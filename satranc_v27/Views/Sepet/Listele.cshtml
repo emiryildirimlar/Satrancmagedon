@@ -1,0 +1,101 @@
+﻿@model List<satranc_v27.Models.Entity.Sepet>
+@{
+    ViewBag.Title = "Sepetiniz";
+    Layout = "~/Views/Shared/_AlicilarLayout.cshtml";
+}
+
+<h3>Sepetiniz</h3>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Sepetinizde ürün bulunmamaktadır.</div>
+}
+else
+{
+    <table class="table table-striped text-white">
+        <thead>
+            <tr>
+                <th>Ürün</th>
+                <th>Görsel</th>
+                <th>Fiyat</th>
+                <th>Miktar</th>
+                <th>Toplam</th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Urunler.urun_adi</td>
+                    <td>
+                        <img src="@item.Urunler.gorsel_url" alt="Ürün Görseli" width="60" height="60" style="object-fit:cover;" />
+                    </td>
+                    <td>@item.Urunler.fiyat ₺</td>
+                    <td class="align-middle">
+                        <div class="d-flex align-items-center justify-content-start">
+                            <form action="@Url.Action("MiktarDegistir", "Sepet")" method="post" class="me-2">
+                                @Html.Hidden("sepetId", item.sepet_id)
+                                @Html.Hidden("artis", -1)
+                                <button type="submit" class="btn btn-sm btn-outline-primary fw-bold">−</button>
+                            </form>
+
+                            <span class="fw-semibold">@item.miktar</span>
+
+                            <form action="@Url.Action("MiktarDegistir", "Sepet")" method="post" class="ms-2">
+                                @Html.Hidden("sepetId", item.sepet_id)
+                                @Html.Hidden("artis", 1)
+                                <button type="submit" class="btn btn-sm btn-outline-primary fw-bold">+</button>
+                            </form>
+                        </div>
+                    </td>
+                    <td>@(item.miktar * item.Urunler.fiyat) ₺</td>
+                    <td>
+                        <form action="@Url.Action("Sil", "Sepet")" method="post" onsubmit="return confirm('Bu ürünü sepetten silmek istiyor musunuz?');">
+                            @Html.Hidden("sepetId", item.sepet_id)
+                            <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Toplam Tutar -->
+    <div class="alert alert-success">
+        <strong>Toplam Tutar: </strong>@ViewBag.ToplamTutar ₺
+    </div>
+
+    <!-- Alışverişi Tamamla Butonu -->
+    <div class="text-end mt-4">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#onayModal">Alışverişi Tamamla</button>
+    </div>
+
+    <!-- Modal (döngü DIŞINDA olacak) -->
+    <div class="modal fade" id="onayModal" tabindex="-1" aria-labelledby="onayModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="onayModalLabel">Alışverişi Onayla</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        @foreach (var item in Model)
+                        {
+                            <li>@item.Urunler.urun_adi x @item.miktar</li>
+                        }
+                    </ul>
+                    <hr />
+                    <strong>Toplam Tutar: @ViewBag.ToplamTutar ₺</strong>
+                </div>
+                <div class="modal-footer">
+                    <form action="@Url.Action("Tamamla", "Sepet")" method="post">
+                        <button type="submit" class="btn btn-success">Onayla</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

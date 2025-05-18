@@ -1,0 +1,232 @@
+﻿@using System.Linq
+@using System.Collections.Generic
+@{ var aliciAdSoyad = Session["AliciAdSoyad"] as string;
+                var aliciId = Session["AliciId"] as int?;
+                var sepet = Session["Sepet"] as List<int>;
+                var sepetAdet = sepet?.Count ?? 0; }
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title - Satrançmagedon</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #b58863;
+            --secondary-color: #f0d9b5;
+            --accent-color: #779556;
+            --dark-text: #333;
+            --light-text: #f8f9fa;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-container {
+            flex: 1;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            color: var(--dark-text);
+            background-color: #f5f5f5;
+        }
+
+        .navbar-custom {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: .5rem 1rem;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+
+            .search-box input {
+                padding-left: 40px;
+                border-radius: 20px;
+                border: 1px solid #ddd;
+            }
+
+            .search-box i {
+                position: absolute;
+                left: 15px;
+                top: 10px;
+                color: #777;
+            }
+
+        .product-img {
+            height: 200px;
+            object-fit: contain;
+            background-color: #f9f9f9;
+            padding: 10px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: .3s;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+            .product-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+
+        media (max-width: 768px) {
+            .product-img
+
+        {
+            height: 150px;
+        }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="@Url.Action("Index","Alicilar")">
+                <i class="fas fa-chess" style="color:var(--primary-color); font-size:1.8rem"></i>
+                <span style="font-weight:700; color:var(--primary-color)">Satrançmagedon</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <div class="d-flex align-items-center ms-auto">
+                    <div class="search-box me-3">
+                        <i class="fas fa-search"></i>
+                        <form action="@Url.Action("Index","Alicilar")" method="get">
+                            <input type="text" name="arama" class="form-control" placeholder="Ürün ara..." value="@(Request.QueryString["arama"] ?? "")" />
+                        </form>
+                    </div>
+                    <div class="dropdown user-menu">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown">
+                            <span class="ms-2">@aliciAdSoyad</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="@Url.Action("Profile","Alicilar")"><i class="fas fa-user me-2"></i>Profilim</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Siparislerim", "Alicilar")"><i class="fas fa-box me-2"></i>Siparişlerim</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Listele","Sepet")"><i class="fas fa-shopping-cart me-2"></i>Sepetim</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Logout","Alicilar")"><i class="fas fa-sign-out-alt me-2"></i>Çıkış Yap</a></li>
+                        </ul>
+                    </div>
+                    <a href="@Url.Action("Listele","Sepet")" class="btn btn-outline-primary ms-3 position-relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        @Html.Action("SepetAdet", "Sepet")
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-container">
+        @RenderBody()
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <h5 class="footer-title">Satranç Mağazası</h5>
+                    <p>Kaliteli satranç ürünleri için tek adresiniz.</p>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="footer-title">Hızlı Linkler</h5>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="#">Anasayfa</a></li>
+                        <li><a href="#">Ürünler</a></li>
+                        <li><a href="#">Hakkımızda</a></li>
+                        <li><a href="#">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="footer-title">Hesabım</h5>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="#">Profilim</a></li>
+                        <li><a href="#">Siparişlerim</a></li>
+                        <li><a href="#">Favorilerim</a></li>
+                        <li><a href="#">Sepetim</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="footer-title">İletişim</h5>
+                    <ul class="footer-links list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> İstanbul, Türkiye</li>
+                        <li><i class="fas fa-phone me-2"></i> 0 (212) 123 45 67</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@satrancmagaza.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr style="background-color:rgba(255,255,255,0.1)" />
+            <div class="text-center pt-3">
+                <p class="mb-0">© 2023 Satranç Mağazası. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js"></script>
+    <script>
+        toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            positionClass: 'toast-bottom-right',
+            showDuration: '300', hideDuration: '1000',
+            timeOut: '5000', extendedTimeOut: '1000',
+            showEasing: 'swing', hideEasing: 'linear',
+            showMethod: 'fadeIn', hideMethod: 'fadeOut'
+        };
+        @if (TempData["SuccessMessage"] != null) { <text>toastr.success('@TempData["SuccessMessage"]');</text> }
+        @if (TempData["ErrorMessage"] != null)   { <text>toastr.error('@TempData["ErrorMessage"]');</text>   }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.qty-decrease').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const input = btn.nextElementSibling;
+                    let val = parseInt(input.value) || 0;
+                    const min = parseInt(input.getAttribute('min')) || 1;
+                    if (val > min) input.value = val - 1;
+                });
+            });
+            document.querySelectorAll('.qty-increase').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const input = btn.previousElementSibling;
+                    let val = parseInt(input.value) || 0;
+                    const max = parseInt(input.getAttribute('max')) || Infinity;
+                    if (val < max) input.value = val + 1;
+                });
+            });
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

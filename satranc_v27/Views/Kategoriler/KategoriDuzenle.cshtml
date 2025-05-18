@@ -1,0 +1,29 @@
+﻿@model satranc_v27.Models.Entity.Kategoriler
+@{
+    ViewBag.Title = "KategoriDuzenle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Kategori Düzenle</h2>
+
+@using (Html.BeginForm("KategoriDuzenle", "Kategoriler", FormMethod.Post))
+{
+@Html.HiddenFor(x => x.kategori_id)
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.kategori_adi)
+                    @Html.TextBoxFor(x => x.kategori_adi, new { @class = "form-control" })
+                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(x => x.aciklama)
+                                    @Html.TextAreaFor(x => x.aciklama, new { @class = "form-control", rows = 4 })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("Aktif mi?")
+                                    @Html.CheckBox("egitim_aktif", Model.aktif ?? false)
+                                </div>
+                                                                <button type="submit" class="btn btn-primary">Güncelle</button>
+                                                                                @Html.ActionLink("Geri Dön", "Index", null, new { @class = "btn btn-secondary" })}
+

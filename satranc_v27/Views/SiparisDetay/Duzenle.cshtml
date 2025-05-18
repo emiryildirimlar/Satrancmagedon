@@ -1,0 +1,35 @@
+﻿@model satranc_v27.Models.Entity.SiparisDetaylari
+
+@{
+    ViewBag.Title = "Sipariş Detay Düzenle";
+}
+
+<h2>Sipariş Detay Düzenle</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.detay_id)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.siparis_id)
+        @Html.DropDownListFor(m => m.siparis_id, (SelectList)ViewBag.Siparisler, "-- Sipariş Seçin --", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.urun_id)
+        @Html.DropDownListFor(m => m.urun_id, (SelectList)ViewBag.Urunler, "-- Ürün Seçin --", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.miktar)
+        @Html.TextBoxFor(m => m.miktar, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.birim_fiyat)
+        @Html.TextBoxFor(m => m.birim_fiyat, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+    @Html.ActionLink("Geri", "Index", null, new { @class = "btn btn-secondary" })
+}

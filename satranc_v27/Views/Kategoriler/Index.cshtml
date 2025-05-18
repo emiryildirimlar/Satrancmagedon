@@ -1,0 +1,39 @@
+﻿@using satranc_v27.Models.Entity
+@model List<Kategoriler>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Kategori Listesi</h2>
+
+<p>
+    @Html.ActionLink("Yeni Kategori Ekle", "KategoriEkle", "Kategoriler", null, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Kategori Adı</th>
+            <th>Açıklama</th>
+            <th>Aktif mi?</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var kategori in Model)
+        {
+<tr>
+    <td>@kategori.kategori_id</td>
+    <td>@kategori.kategori_adi</td>
+    <td>@kategori.aciklama</td>
+    <td>@((kategori.aktif ?? false) ? "Evet" : "Hayır")</td>
+    <td>
+        @Html.ActionLink("Düzenle", "KategoriDuzenle", new { id = kategori.kategori_id }, new { @class = "btn btn-warning btn-sm" }) |
+        @Html.ActionLink("Sil", "KategoriSil", new { id = kategori.kategori_id }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Emin misin?');" })
+    </td>
+</tr>}
+    </tbody>
+</table>
+

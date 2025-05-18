@@ -1,0 +1,45 @@
+﻿@model satranc_v27.Models.Entity.Urunler
+
+@{ ViewBag.Title = "UrunEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+
+<h2>Yeni Ürün Ekle</h2>
+
+@using (Html.BeginForm("UrunEkle", "Urunler", FormMethod.Post))
+{
+<div class="form-group">
+    @Html.LabelFor(x => x.urun_adi)
+    @Html.TextBoxFor(x => x.urun_adi, new { @class = "form-control" })
+</div>
+
+      <div class="form-group">
+       @Html.LabelFor(x => x.kategori_id)
+       @Html.TextBoxFor(x => x.kategori_id, new { @class = "form-control" })
+       </div>
+
+       <div class="form-group">
+       @Html.LabelFor(x => x.fiyat)
+       @Html.TextBoxFor(x => x.fiyat, new { @class = "form-control", type = "number", step = "0.01" })
+       </div>
+
+       <div class="form-group">
+        @Html.LabelFor(x => x.stok_miktari)
+        @Html.TextBoxFor(x => x.stok_miktari, new { @class = "form-control", type = "number" })
+        </div>
+
+       <div class="form-group">
+        @Html.LabelFor(x => x.aciklama)
+        @Html.TextAreaFor(x => x.aciklama, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+         @Html.LabelFor(x => x.gorsel_url)
+         @Html.TextBoxFor(x => x.gorsel_url, new { @class = "form-control" })
+         </div>
+
+        
+
+        <button type="submit" class="btn btn-success">Ürünü Kaydet</button>}
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a4fb709a37ec43648444b2e8ca80baf5" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="satranc_v26Model.Admin" Width="1.5" PointX="7.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="satranc_v26Model.Alicilar" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="satranc_v26Model.Egitimler" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="satranc_v26Model.Kategoriler" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="satranc_v26Model.Saticilar" Width="1.5" PointX="8.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="satranc_v26Model.Sepet" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="satranc_v26Model.SiparisDetaylari" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="satranc_v26Model.Siparisler" Width="1.5" PointX="6" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="satranc_v26Model.sysdiagrams" Width="1.5" PointX="9.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="satranc_v26Model.Urunler" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="satranc_v26Model.Yorumlar" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="satranc_v26Model.FK__Sepet__alici_id__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="satranc_v26Model.FK__Siparisle__alici__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="satranc_v26Model.FK__Yorumlar__alici___5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="satranc_v26Model.FK__Urunler__kategor__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="satranc_v26Model.FK__Sepet__urun_id__60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="satranc_v26Model.FK__SiparisDe__sipar__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="satranc_v26Model.FK__SiparisDe__urun___571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="satranc_v26Model.FK__Yorumlar__urun_i__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="satranc_v26Model.UrunEgitim" ManuallyRouted="false" />
+        <AssociationConnector Association="satranc_v26Model.FK_Urunler_Saticilar" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

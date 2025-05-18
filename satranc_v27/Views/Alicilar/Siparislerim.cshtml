@@ -1,0 +1,36 @@
+﻿@model List<satranc_v27.Models.Entity.Siparisler>
+@{ ViewBag.Title = "Siparişlerim";
+                Layout = "~/Views/Shared/_AlicilarLayout.cshtml"; }
+
+<h2 class="mt-4">Siparişlerim</h2>
+
+@if (!Model.Any())
+{
+<div class="alert alert-info">Henüz siparişiniz bulunmamaktadır.</div> }
+            else
+            {
+<table class="table table-striped">
+    <thead>
+        <tr>
+            
+            <th>Tarih</th>
+            <th>Toplam Tutar</th>
+            <th>Ödeme Durumu</th>
+            <th>Kargo Durumu</th>
+            <th>Teslimat Adresi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var siparis in Model)
+        {
+<tr>
+    
+    <td>@(siparis.siparis_tarihi.HasValue ? siparis.siparis_tarihi.Value.ToString("dd.MM.yyyy HH:mm") : "-")</td>
+    <td>@siparis.toplam_tutar.ToString("C")</td>
+    <td>@siparis.odeme_durumu</td>
+    <td>@siparis.kargo_durumu</td>
+    <td>@siparis.teslimat_adresi</td>
+</tr>}
+    </tbody>
+</table>}
+

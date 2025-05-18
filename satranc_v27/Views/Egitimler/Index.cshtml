@@ -1,0 +1,50 @@
+﻿@using satranc_v27.Models.Entity
+@model List<Egitimler>
+@{ ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<h2>Eğitimler</h2>
+
+<p>
+    @Html.ActionLink("Yeni Eğitim Ekle", "EgitimEkle", null, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Eğitim Adı</th>
+            <th>Açıklama</th>
+            <th>Tarih</th>
+            <th>Süre</th>
+            <th>Fiyat</th>
+            <th>Görsel</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var egitim in Model)
+        {
+<tr>
+    <td>@egitim.egitim_id</td>
+    <td>@egitim.egitim_adi</td>
+    <td>@egitim.egitim_aciklama</td>
+    <td>@(egitim.egitim_tarihi.HasValue ? egitim.egitim_tarihi.Value.ToString("dd.MM.yyyy HH:mm") : "Tarih Yok")</td>
+    <td>@egitim.egitim_suresi</td>
+    <td>@egitim.egitim_fiyati ₺</td>
+    <td>
+        @if (!string.IsNullOrEmpty(egitim.egitim_gorsel_url))
+        {
+<img src="@egitim.egitim_gorsel_url" alt="görsel" width="100" /> }
+                else
+                {
+<span>Yok</span>}
+    </td>
+    <td>
+        @Html.ActionLink("Düzenle", "EgitimDuzenle", new { id = egitim.egitim_id }, new { @class = "btn btn-primary btn-sm" }) |
+        @Html.ActionLink("Sil", "EgitimSil", new { id = egitim.egitim_id }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Silmek istediğine emin misin?');" })
+    </td>
+</tr>}
+    </tbody>
+</table>
+

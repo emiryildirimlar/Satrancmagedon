@@ -1,0 +1,46 @@
+﻿
+@model satranc_v27.Models.Entity.Alicilar
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_AlicilarLayout.cshtml";
+}
+
+
+
+
+    <h2>Profil Bilgilerim</h2>
+
+    @if (ViewBag.Basarili != null)
+    {
+        <div class="alert alert-success">
+            @ViewBag.Basarili
+        </div>}
+
+    @using (Html.BeginForm("Profile", "Alicilar", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label>Ad</label>
+            @Html.TextBoxFor(x => x.ad, new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="form-group">
+            <label>Soyad</label>
+            @Html.TextBoxFor(x => x.soyad, new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="form-group">
+            <label>Telefon</label>
+            @Html.TextBoxFor(x => x.telefon, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            <label>Adres</label>
+            @Html.TextAreaFor(x => x.adres, new { @class = "form-control", rows = 3 })
+        </div>
+
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+}
+
+

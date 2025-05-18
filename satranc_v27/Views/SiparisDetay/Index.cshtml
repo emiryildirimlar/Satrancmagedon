@@ -1,0 +1,36 @@
+﻿@using satranc_v27.Models.Entity
+@model List<SiparisDetaylari>
+
+@{
+    ViewBag.Title = "Sipariş Detayları";
+}
+
+<h2>Sipariş Detayları</h2>
+
+<p>
+    @Html.ActionLink("Yeni Detay Ekle", "Ekle", null, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>Sipariş ID</th>
+        <th>Ürün</th>
+        <th>Miktar</th>
+        <th>Birim Fiyat</th>
+        <th>İşlemler</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.siparis_id</td>
+            <td>@item.Urunler.urun_adi</td>
+            <td>@item.miktar</td>
+            <td>@item.birim_fiyat ₺</td>
+            <td>
+                @Html.ActionLink("Düzenle", "Duzenle", new { id = item.detay_id }, new { @class = "btn btn-primary btn-sm" }) |
+                @Html.ActionLink("Sil", "Sil", new { id = item.detay_id }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Silmek istediğinize emin misiniz?');" })
+            </td>
+        </tr>
+    }
+</table>

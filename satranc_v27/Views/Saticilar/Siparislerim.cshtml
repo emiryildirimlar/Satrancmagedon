@@ -1,0 +1,41 @@
+﻿@model List<satranc_v27.Models.Entity.Siparisler>
+
+@{ ViewBag.Title = "Siparislerim";
+                Layout = "~/Views/Shared/_SaticilarLayout.cshtml"; }
+
+
+
+<h2>Siparişlerim</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            
+            <th>Alıcı ID</th>
+            <th>Sipariş Tarihi</th>
+            <th>Toplam Tutar</th>
+            <th>Ödeme Durumu</th>
+            <th>Kargo Durumu</th>
+            <th>Teslimat Adresi</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var siparis in Model)
+        {
+        <tr>
+            
+            <td>@siparis.Alicilar.ad  @siparis.Alicilar.soyad</td>
+            <td>@(siparis.siparis_tarihi.HasValue ? siparis.siparis_tarihi.Value.ToString("dd.MM.yyyy HH:mm") : "-")</td>
+
+            <td>@siparis.toplam_tutar ₺</td>
+            <td>@siparis.odeme_durumu</td>
+            <td>@siparis.kargo_durumu</td>
+            <td>@siparis.teslimat_adresi</td>
+            <td>
+                @Html.ActionLink("Düzenle", "SiparisDuzenle", new { id = siparis.siparis_id }, new { @class = "btn btn-sm btn-warning" }) |
+                @Html.ActionLink("Sil", "SiparisSil", new { id = siparis.siparis_id }, new { @class = "btn btn-sm btn-danger", onclick = "return confirm('Siparişi silmek istediğinize emin misiniz?');" })
+            </td>
+        </tr>}
+    </tbody>
+</table>

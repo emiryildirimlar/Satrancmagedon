@@ -1,0 +1,128 @@
+﻿@model satranc_v27.Models.Entity.Urunler
+@{ ViewBag.Title = Model.urun_adi;
+                Layout = "~/Views/Shared/_AlicilarLayout.cshtml"; }
+
+<style>
+    .product-detail-container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        margin-top: 40px;
+    }
+
+    .product-detail-title {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .product-category {
+        font-size: 14px;
+        color: #6c757d;
+        margin-bottom: 10px;
+    }
+
+    .product-price {
+        font-size: 24px;
+        font-weight: bold;
+        color: #28a745;
+        margin-bottom: 15px;
+    }
+
+    .product-description {
+        font-size: 15px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .stock-info {
+        font-size: 14px;
+        margin-bottom: 15px;
+        color: #555;
+    }
+
+    .btn-buy {
+        font-weight: 500;
+        padding: 10px 20px;
+    }
+
+    .quantity-controls {
+        width: 160px;
+    }
+</style>
+
+<div class="container product-detail-container">
+    <div class="row">
+        <!-- Ürün Görseli -->
+        <div class="col-md-6 mb-4">
+            <img src="@Model.gorsel_url" class="img-fluid rounded shadow-sm" alt="@Model.urun_adi" />
+        </div>
+
+       
+        <div class="col-md-6">
+            <h2 class="product-detail-title">@Model.urun_adi</h2>
+            <p class="product-category">@Model.Kategoriler.kategori_adi</p>
+            <div class="product-price">@Model.fiyat.ToString("C")</div>
+
+            <p class="product-description">@Model.aciklama</p>
+
+            <!-- 🧑‍💼 Satıcı Bilgisi -->
+            @if (Model.Saticilar != null)
+            {
+    <p><strong>Satıcı:</strong> @Model.Saticilar.ad @Model.Saticilar.soyad</p>
+                    <p><strong>İletişim:</strong> @Model.Saticilar.email</p>}
+
+            @if (Model.stok_miktari > 0)
+            {
+    <p class="stock-info"><strong>Stok:</strong> @Model.stok_miktari adet</p>
+
+                    <form method="post" action="@Url.Action("Ekle", "Sepet")">
+                        <input type="hidden" name="urunId" value="@Model.urun_id" />
+                        <input type="hidden" id="adetInput" name="miktar" value="1" />
+
+                        <div class="input-group quantity-controls mb-3">
+                            <button class="btn btn-outline-secondary" type="button" onclick="adetAzalt(@Model.stok_miktari)">-</button>
+                            <input type="text" class="form-control text-center" id="adetGoster" value="1" readonly />
+                            <button class="btn btn-outline-secondary" type="button" onclick="adetArttir(@Model.stok_miktari)">+</button>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-buy">
+                            <i class="fas fa-shopping-cart me-2"></i> Sepete Ekle
+                        </button>
+                    </form> }
+                else
+                {
+    <p class="text-danger fw-bold">Bu ürün şu anda stokta yok.</p>
+                    <button class="btn btn-secondary" disabled>
+                        <i class="fas fa-times-circle me-2"></i> Stokta Yok
+                    </button>}
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function adetArttir(max) {
+            let input = document.getElementById("adetInput");
+            let goster = document.getElementById("adetGoster");
+            let adet = parseInt(input.value);
+            if (adet < max) {
+                adet++;
+                input.value = adet;
+                goster.value = adet;
+            }
+        }
+
+        function adetAzalt(max) {
+            let input = document.getElementById("adetInput");
+            let goster = document.getElementById("adetGoster");
+            let adet = parseInt(input.value);
+            if (adet > 1) {
+                adet--;
+                input.value = adet;
+                goster.value = adet;
+            }
+        }
+    </script>
+}
